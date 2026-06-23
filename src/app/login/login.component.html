@@ -1,0 +1,58 @@
+<main class="login-page">
+    <section class="login-shell" aria-label="Login">
+        <div class="brand-panel">
+            <div class="brand-mark">
+                <img [src]="logoUrl" alt="Purchasing Management System logo">
+            </div>
+            <div>
+                <p class="eyebrow">Purchasing Management System</p>
+                <h1>Secure access to your purchasing workspace</h1>
+                <p class="brand-copy">
+                    Track requests, suppliers, approvals, and purchase orders from one clean operational dashboard.
+                </p>
+            </div>
+            <div class="brand-stats" aria-label="Platform highlights">
+                <span>Requests</span>
+                <span>Suppliers</span>
+                <span>Orders</span>
+            </div>
+        </div>
+
+        <mat-card class="login-card">
+            <mat-card-header>
+                <mat-card-title>Welcome back</mat-card-title>
+                <mat-card-subtitle>Sign in with your business account</mat-card-subtitle>
+            </mat-card-header>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+                <mat-card-content>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" autocomplete="username" formControlName="username" required>
+                        <mat-error *ngIf="loginForm.get('username')?.hasError('required')">Username is required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" autocomplete="current-password" formControlName="password" required>
+                        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+                        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Password should be at least 6 characters long</mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+
+                <p class="auth-message" *ngIf="authError">{{ authError }}</p>
+
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting">
+                        {{ isSubmitting ? 'Signing in...' : 'Login' }}
+                    </button>
+                </mat-card-actions>
+
+                <p class="auth-switch">
+                    New to the platform?
+                    <a routerLink="/register">Create an account</a>
+                </p>
+            </form>
+        </mat-card>
+    </section>
+</main>

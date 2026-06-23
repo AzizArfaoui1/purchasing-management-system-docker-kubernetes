@@ -1,0 +1,88 @@
+<main class="login-page">
+    <section class="login-shell register-shell" aria-label="Register">
+        <div class="brand-panel">
+            <div class="brand-mark">
+                <img [src]="logoUrl" alt="Purchasing Management System logo">
+            </div>
+            <div>
+                <p class="eyebrow">Purchasing Management System</p>
+                <h1>Start managing purchasing with a cleaner workflow</h1>
+                <p class="brand-copy">
+                    Create your workspace account and prepare your team to manage suppliers, requests, and orders with better visibility.
+                </p>
+            </div>
+            <div class="brand-stats" aria-label="Platform highlights">
+                <span>Approvals</span>
+                <span>Budgets</span>
+                <span>Audit trail</span>
+            </div>
+        </div>
+
+        <mat-card class="login-card">
+            <mat-card-header>
+                <mat-card-title>Create account</mat-card-title>
+                <mat-card-subtitle>Enter your business details to continue</mat-card-subtitle>
+            </mat-card-header>
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+                <mat-card-content>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Last name</mat-label>
+                        <input matInput type="text" autocomplete="family-name" formControlName="nom" required>
+                        <mat-error *ngIf="registerForm.get('nom')?.hasError('required')">Last name is required</mat-error>
+                        <mat-error *ngIf="registerForm.get('nom')?.hasError('minlength')">Last name should be at least 2 characters</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>First name</mat-label>
+                        <input matInput type="text" autocomplete="given-name" formControlName="prenom" required>
+                        <mat-error *ngIf="registerForm.get('prenom')?.hasError('required')">First name is required</mat-error>
+                        <mat-error *ngIf="registerForm.get('prenom')?.hasError('minlength')">First name should be at least 2 characters</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" autocomplete="email" formControlName="email" required>
+                        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">Email is required</mat-error>
+                        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" autocomplete="new-password" formControlName="password" required>
+                        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">Password is required</mat-error>
+                        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">Password should be at least 6 characters</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Confirm password</mat-label>
+                        <input matInput type="password" autocomplete="new-password" formControlName="confirmPassword" required>
+                        <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">Please confirm your password</mat-error>
+                        <mat-error *ngIf="registerForm.hasError('passwordsMismatch')">Passwords do not match</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Role</mat-label>
+                        <mat-select formControlName="role" required>
+                            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="registerForm.get('role')?.hasError('required')">Role is required</mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+
+                <p class="auth-message" *ngIf="authError">{{ authError }}</p>
+
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting">
+                        {{ isSubmitting ? 'Creating...' : 'Create account' }}
+                    </button>
+                </mat-card-actions>
+
+                <p class="auth-switch">
+                    Already have an account?
+                    <a routerLink="/login">Back to login</a>
+                </p>
+            </form>
+        </mat-card>
+    </section>
+</main>
