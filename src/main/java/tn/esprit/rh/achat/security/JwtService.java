@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import tn.esprit.rh.achat.entities.Role;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -37,6 +38,14 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return extractClaims(token).getSubject();
+    }
+
+    public Long extractUserId(String token) {
+        return extractClaims(token).get("userId", Number.class).longValue();
+    }
+
+    public Role extractRole(String token) {
+        return Role.valueOf(extractClaims(token).get("role", String.class));
     }
 
     public boolean isTokenValid(String token, AuthUser user) {

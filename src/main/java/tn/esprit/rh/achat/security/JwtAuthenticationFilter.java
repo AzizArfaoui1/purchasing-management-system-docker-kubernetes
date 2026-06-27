@@ -7,10 +7,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tn.esprit.rh.achat.entities.Role;
 
 import java.io.IOException;
 
@@ -35,15 +35,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String jwt = authorization.substring(7);
         try {
-            String username = jwtService.extractUsername(jwt);
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                AuthUser authUser = (AuthUser) userDetails;
+            Long userId = jwtService.extractUserId(jwt);
+            Role role = jwtService.extractRole(jwt);
+            if (userId != null && role != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                AuthUser authUser = (AuthUser) userDetailsService.loadUserByUsernameById(userId, role);
                 if (jwtService.isTokenValid(jwt, authUser)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
+                            authUser,
                             null,
-                            userDetails.getAuthorities());
+                            authUser.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
