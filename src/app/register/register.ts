@@ -6,9 +6,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService, UserRole } from '../auth.service';
+import { defaultRouteForRole } from '../auth.guard';
 
 @Component({
   selector: 'app-register',
@@ -34,16 +35,16 @@ export class Register {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.registerForm = this.formBuilder.group(
       {
-        nom: ['', [Validators.required, Validators.minLength(2)]],
+        username: ['', [Validators.required, Validators.minLength(2)]],
         prenom: ['', [Validators.required, Validators.minLength(2)]],
-        email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
-        role: ['OPERATEUR', [Validators.required]]
+        role: ['FOURNISSEUR', [Validators.required]]
       },
       { validators: this.passwordsMatch }
     );
@@ -63,10 +64,10 @@ export class Register {
       .pipe(finalize(() => this.isSubmitting = false))
       .subscribe({
         next: (response) => {
-          console.log('Signup successful', response);
+          this.router.navigate([defaultRouteForRole(response.role)]);
         },
         error: () => {
-          this.authError = 'Signup API is not available yet. Backend must expose POST /auth/signup.';
+          this.authError = 'Unable to create this account. Please check the username and role.';
         }
       });
   }

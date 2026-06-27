@@ -27,10 +27,10 @@
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
                 <mat-card-content>
                     <mat-form-field appearance="outline">
-                        <mat-label>Last name</mat-label>
-                        <input matInput type="text" autocomplete="family-name" formControlName="nom" required>
-                        <mat-error *ngIf="registerForm.get('nom')?.hasError('required')">Last name is required</mat-error>
-                        <mat-error *ngIf="registerForm.get('nom')?.hasError('minlength')">Last name should be at least 2 characters</mat-error>
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" autocomplete="username" formControlName="username" required>
+                        <mat-error *ngIf="registerForm.get('username')?.hasError('required')">Username is required</mat-error>
+                        <mat-error *ngIf="registerForm.get('username')?.hasError('minlength')">Username should be at least 2 characters</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
@@ -38,13 +38,6 @@
                         <input matInput type="text" autocomplete="given-name" formControlName="prenom" required>
                         <mat-error *ngIf="registerForm.get('prenom')?.hasError('required')">First name is required</mat-error>
                         <mat-error *ngIf="registerForm.get('prenom')?.hasError('minlength')">First name should be at least 2 characters</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Email</mat-label>
-                        <input matInput type="email" autocomplete="email" formControlName="email" required>
-                        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">Email is required</mat-error>
-                        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Invalid email format</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">

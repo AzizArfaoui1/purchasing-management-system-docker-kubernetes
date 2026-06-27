@@ -18,9 +18,8 @@ export interface LoginRequest {
 }
 
 export interface SignupRequest {
-  nom: string;
+  username: string;
   prenom: string;
-  email: string;
   password: string;
   role: UserRole;
 }
@@ -53,8 +52,10 @@ export class AuthService {
     );
   }
 
-  signup(payload: SignupRequest): Observable<unknown> {
-    return this.http.post<unknown>(`${this.apiUrl}/signup`, payload);
+  signup(payload: SignupRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/signup`, payload).pipe(
+      tap((response) => this.storeSession(response))
+    );
   }
 
   refreshAccessToken(): Observable<RefreshResponse> {
