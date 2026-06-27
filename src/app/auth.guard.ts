@@ -22,11 +22,11 @@ export const authGuard: CanActivateFn = (route) => {
 export function defaultRouteForRole(role: UserRole | null): string {
   switch (role) {
     case 'ADMINISTRATEUR':
-      return '/admin';
+      return '/dashboard';
     case 'OPERATEUR':
-      return '/operator';
+      return '/produits';
     case 'FOURNISSEUR':
-      return '/supplier';
+      return '/fournisseurs';
     default:
       return '/login';
   }

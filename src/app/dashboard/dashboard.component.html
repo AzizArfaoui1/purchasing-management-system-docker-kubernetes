@@ -1,0 +1,41 @@
+<section class="page-head">
+  <div>
+    <p class="eyebrow">Vue synthese</p>
+    <h2>Dashboard</h2>
+  </div>
+</section>
+
+<div class="stats" aria-busy="{{ loading }}">
+  <article *ngFor="let stat of stats">
+    <span>{{ stat.label }}</span>
+    <strong>{{ stat.value }}</strong>
+  </article>
+</div>
+
+<section class="panel">
+  <div class="panel-head">
+    <h3>Stocks faibles</h3>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Libelle</th>
+        <th>Quantite</th>
+        <th>Minimum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stock of lowStocks">
+        <td>{{ stock['idStock'] }}</td>
+        <td>{{ stock['libelleStock'] }}</td>
+        <td>{{ stock['qte'] }}</td>
+        <td>{{ stock['qteMin'] }}</td>
+      </tr>
+      <tr *ngIf="!lowStocks.length">
+        <td colspan="4" class="empty">Aucun stock faible.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

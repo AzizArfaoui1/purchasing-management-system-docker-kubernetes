@@ -18,9 +18,15 @@ interface NavItem {
 })
 export class DashboardShellComponent {
   readonly navItems: NavItem[] = [
-    { label: 'Admin', path: '/admin', roles: ['ADMINISTRATEUR'] },
-    { label: 'Operator', path: '/operator', roles: ['OPERATEUR'] },
-    { label: 'Supplier', path: '/supplier', roles: ['FOURNISSEUR'] }
+    { label: 'Dashboard', path: '/dashboard', roles: ['ADMINISTRATEUR', 'OPERATEUR', 'FOURNISSEUR'] },
+    { label: 'Produits', path: '/produits', roles: ['ADMINISTRATEUR', 'OPERATEUR'] },
+    { label: 'Stocks', path: '/stocks', roles: ['ADMINISTRATEUR', 'OPERATEUR'] },
+    { label: 'Categories', path: '/categories', roles: ['ADMINISTRATEUR', 'OPERATEUR'] },
+    { label: 'Fournisseurs', path: '/fournisseurs', roles: ['ADMINISTRATEUR', 'FOURNISSEUR'] },
+    { label: 'Secteurs', path: '/secteurs', roles: ['ADMINISTRATEUR'] },
+    { label: 'Operateurs', path: '/operateurs', roles: ['ADMINISTRATEUR'] },
+    { label: 'Factures', path: '/factures', roles: ['ADMINISTRATEUR', 'OPERATEUR', 'FOURNISSEUR'] },
+    { label: 'Reglements', path: '/reglements', roles: ['ADMINISTRATEUR', 'OPERATEUR'] }
   ];
   isLoggingOut = false;
 
