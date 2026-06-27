@@ -2,7 +2,7 @@ package tn.esprit.rh.achat.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,3 +17,4 @@ public abstract class Personne implements Serializable {
 	private String prenom;
 	private String password;
 }
+

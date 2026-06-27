@@ -8,3 +8,4 @@ import tn.esprit.rh.achat.entities.SecteurActivite;
 public interface SecteurActiviteRepository extends CrudRepository<SecteurActivite, Long> {
 
 }
+

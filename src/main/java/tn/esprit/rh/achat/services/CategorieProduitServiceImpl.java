@@ -44,3 +44,4 @@ public class CategorieProduitServiceImpl implements ICategorieProduitService {
 	}
 
 }
+

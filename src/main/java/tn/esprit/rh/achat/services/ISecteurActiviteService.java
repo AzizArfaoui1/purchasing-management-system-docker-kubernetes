@@ -17,3 +17,4 @@ public interface ISecteurActiviteService {
 	SecteurActivite retrieveSecteurActivite(Long id);
 
 }
+

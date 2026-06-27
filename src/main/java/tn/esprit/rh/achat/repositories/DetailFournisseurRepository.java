@@ -8,3 +8,4 @@ import tn.esprit.rh.achat.entities.DetailFournisseur;
 public interface DetailFournisseurRepository  extends JpaRepository<DetailFournisseur, Long>{
 
 }
+

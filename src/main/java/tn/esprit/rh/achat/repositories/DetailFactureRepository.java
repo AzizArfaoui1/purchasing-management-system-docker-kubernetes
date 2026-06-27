@@ -8,3 +8,4 @@ import tn.esprit.rh.achat.entities.DetailFacture;
 public interface DetailFactureRepository extends JpaRepository<DetailFacture, Long> {
 
 }
+

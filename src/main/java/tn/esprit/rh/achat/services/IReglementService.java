@@ -14,3 +14,4 @@ public interface IReglementService {
 	float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate); 
 
 }
+

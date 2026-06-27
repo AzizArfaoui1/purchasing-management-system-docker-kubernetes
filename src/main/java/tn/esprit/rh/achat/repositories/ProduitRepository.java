@@ -23,3 +23,4 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 	public float getRevenuBrutProduit(@Param("produit") Produit produit, @Param("startDate") Date startDate,
 			@Param("endDate") Date endDate);*/
 }
+

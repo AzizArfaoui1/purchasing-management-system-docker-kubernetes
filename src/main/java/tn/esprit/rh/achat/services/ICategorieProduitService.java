@@ -18,3 +18,4 @@ public interface ICategorieProduitService {
 	CategorieProduit retrieveCategorieProduit(Long id);
 
 }
+

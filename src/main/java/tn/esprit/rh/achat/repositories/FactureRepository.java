@@ -28,3 +28,4 @@ public interface FactureRepository extends JpaRepository<Facture, Long> {
 	void updateFacture(Long id);
 	
 }
+
