@@ -1,0 +1,87 @@
+<section class="page-head">
+  <div>
+    <p class="eyebrow">Module</p>
+    <h2>{{ config.title }}</h2>
+  </div>
+  <button type="button" (click)="newItem()" [disabled]="!config.endpoints.create">+ Ajouter</button>
+</section>
+
+<div class="feedback success" *ngIf="message">{{ message }}</div>
+<div class="feedback error" *ngIf="error">{{ error }}</div>
+
+<section class="toolbar">
+  <input type="search" placeholder="Recherche..." [(ngModel)]="query" [ngModelOptions]="{ standalone: true }">
+
+  <ng-container *ngIf="config.key === 'factures' || config.key === 'reglements'">
+    <input type="number" [placeholder]="config.key === 'factures' ? 'ID fournisseur' : 'ID facture'" [(ngModel)]="filterId" [ngModelOptions]="{ standalone: true }">
+    <button type="button" class="secondary" (click)="filterSpecial()">Filtrer</button>
+  </ng-container>
+
+  <ng-container *ngIf="config.key === 'factures' || config.key === 'reglements'">
+    <input type="date" [(ngModel)]="startDate" [ngModelOptions]="{ standalone: true }">
+    <input type="date" [(ngModel)]="endDate" [ngModelOptions]="{ standalone: true }">
+    <button type="button" class="secondary" (click)="runAnalytics()">{{ config.key === 'reglements' ? 'CA' : 'Recouvrement' }}</button>
+    <strong class="result" *ngIf="analyticsResult !== null">{{ analyticsResult }}</strong>
+  </ng-container>
+</section>
+
+<section class="layout">
+  <div class="panel table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th *ngFor="let field of columns">{{ field.label }}</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of filteredRows">
+          <td>{{ row[config.idKey] }}</td>
+          <td *ngFor="let field of columns">{{ valueOf(row, field.key) }}</td>
+          <td class="actions">
+            <button type="button" class="link" (click)="view(row)">Voir</button>
+            <button type="button" class="link" (click)="edit(row)" *ngIf="config.endpoints.update">Modifier</button>
+            <button type="button" class="link danger" (click)="remove(row)" *ngIf="config.endpoints.delete">Supprimer</button>
+            <button type="button" class="link danger" (click)="cancelFacture(row)" *ngIf="config.key === 'factures'">Annuler</button>
+          </td>
+        </tr>
+        <tr *ngIf="!filteredRows.length">
+          <td [attr.colspan]="columns.length + 2" class="empty">{{ loading ? 'Chargement...' : 'Aucune donnee.' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <aside class="panel form-panel">
+    <h3>{{ editing ? 'Modifier' : 'Ajouter' }} {{ config.title }}</h3>
+    <form [formGroup]="form" (ngSubmit)="save()" *ngIf="config.endpoints.create || config.endpoints.update">
+      <label *ngFor="let field of config.fields">
+        <span>{{ field.label }}</span>
+        <ng-container *ngIf="!field.readonly">
+          <select *ngIf="field.type === 'select'" [formControlName]="controlKey(field)">
+            <option value="">Selectionner</option>
+            <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
+          </select>
+          <input *ngIf="field.type !== 'select' && field.type !== 'boolean'" [type]="field.type" [formControlName]="controlKey(field)">
+          <input *ngIf="field.type === 'boolean'" type="checkbox" [formControlName]="controlKey(field)">
+        </ng-container>
+      </label>
+      <div class="form-actions">
+        <button type="button" class="secondary" (click)="newItem()">Annuler</button>
+        <button type="submit" [disabled]="saving">{{ saving ? 'Enregistrement...' : 'Enregistrer' }}</button>
+      </div>
+    </form>
+
+    <div class="assignment" *ngIf="selected && (config.key === 'produits' || config.key === 'fournisseurs' || config.key === 'factures')">
+      <h3>Assignation</h3>
+      <input type="number" [placeholder]="config.key === 'produits' ? 'ID stock' : config.key === 'fournisseurs' ? 'ID secteur' : 'ID operateur'" [(ngModel)]="assignTarget" [ngModelOptions]="{ standalone: true }">
+      <button type="button" (click)="runAssignment(selected)">Assigner</button>
+    </div>
+
+    <div class="detail" *ngIf="safeSelected">
+      <h3>Detail #{{ safeSelected[config.idKey] }}</h3>
+      <pre>{{ safeSelected | json }}</pre>
+    </div>
+  </aside>
+</section>

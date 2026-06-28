@@ -1,0 +1,32 @@
+<main class="app-shell">
+  <aside class="sidebar">
+    <div>
+      <p class="eyebrow">Purchasing</p>
+      <h1>Management</h1>
+    </div>
+
+    <nav aria-label="Main navigation">
+      <a
+        *ngFor="let item of navItems"
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [hidden]="!allowed(item)"
+      >
+        {{ item.label }}
+      </a>
+    </nav>
+
+    <div class="session">
+      <span>User {{ userId }}</span>
+      <strong>{{ role }}</strong>
+      <button type="button" (click)="logout()" [disabled]="isLoggingOut">
+        {{ isLoggingOut ? 'Logging out...' : 'Logout' }}
+      </button>
+    </div>
+  </aside>
+
+  <section class="content">
+    <router-outlet />
+  </section>
+</main>

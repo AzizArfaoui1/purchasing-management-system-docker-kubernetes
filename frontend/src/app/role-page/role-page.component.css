@@ -1,0 +1,29 @@
+.role-page {
+  max-width: 860px;
+  padding: 32px;
+  border: 1px solid #e2e6ea;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #00846f;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 14px 0 0;
+  color: #667085;
+  line-height: 1.6;
+}
